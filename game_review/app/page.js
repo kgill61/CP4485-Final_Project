@@ -9,7 +9,7 @@ export default function Home() {
   }
 
   return (
-    <body>
+    <div>
       <div>
         {/* this is the section for that carousel I want to add, or at least a header. */}
       </div>
@@ -24,6 +24,6 @@ export default function Home() {
             <p>This is the second portion</p>
         </div>
       </div>
-    </body>
+    </div>
   );
 }

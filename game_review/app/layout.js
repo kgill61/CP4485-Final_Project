@@ -33,13 +33,15 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <body className="min-h-full flex flex-col">
         <nav style={{ display: 'flex', gap: '20px', padding: '10px', backgroundColor: '#333333', alignItems: 'center', }}>
           <h1 style={{ color: '#fffdfd', fontSize: '2rem' }}>Game.Review</h1>
-          <Link href={"/"} style={navBarLink}>HOME</Link>
-          <Link href={"/games"} style={navBarLink}>GAMES</Link>
-          <Link href={"/games"} style={navBarLink}>ABOUT US</Link>
+          <Link href="/" style={navBarLink}>HOME</Link>
+          <Link href="/games" style={navBarLink}>GAMES</Link>
+          <Link href="/about" style={navBarLink}>ABOUT US</Link>
         </nav>
-      <body className="min-h-full flex flex-col">{children}</body>
+        {children}
+      </body>
     </html>
   );
 }
