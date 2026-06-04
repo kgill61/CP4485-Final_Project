@@ -1,2 +1,0 @@
-// TODO: list all games and their info here, that way we can send that object to the gameDisplay page to fill it out when being displayed. 
-// Need to figure out a way to send that object, maybe using the database later?
