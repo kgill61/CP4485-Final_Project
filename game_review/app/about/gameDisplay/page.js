@@ -1,0 +1,2 @@
+// TODO: setup this page so that it grabs the object sent to it, and displays a page based on that object. so each portion of the content is generated from said object (Images, description, reviews, etc)
+// Definitely use Databases for this later on, but you can try and get a layout down for it if you want
