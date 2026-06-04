@@ -9,21 +9,22 @@ export default function Home() {
   }
 
   return (
-    <body>
+    /*Responsive web design using Tailwind*/
+    <div className="sm:text-2xl md:text-3xl lg:text-4xl">
       <div>
         {/* this is the section for that carousel I want to add, or at least a header. */}
       </div>
       {/*This is the section for our home page, one section for a bunch of random/popular games , one for a random game to look at? */}
       <div style={{display: "flex", width: '100vw'}}>
         <div style={pageContainers}>
-          <h1>Portion 1</h1>
-            <p>This is the first portion</p>
+          <h1>|| What's hot ||</h1>
+            <p>Games that are popular</p>
         </div>
         <div style={pageContainers}>
-          <h1>Portion 2</h1>
-            <p>This is the second portion</p>
+          <h1>|| Random ||</h1>
+            <p>Random assortment of games you might like!</p>
         </div>
       </div>
-    </body>
+    </div>
   );
 }
