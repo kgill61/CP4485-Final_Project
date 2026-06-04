@@ -1,6 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
+import NavBar from "./NavBar.js";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,20 +25,14 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col bg-slate-950 text-slate-200">
         
-        <nav className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 p-4 sm:p-6 bg-slate-900 border-b border-slate-800 shadow-md">
-          <h1 className="text-white text-2xl font-bold tracking-wide">Game.Review</h1>
-          
-          <div className="flex gap-2 sm:gap-4 font-medium text-sm sm:text-base">
-            <Link href="/" className="px-4 py-2 rounded-lg hover:bg-slate-800 hover:text-blue-400 transition-colors">HOME</Link>
-            <Link href="/games" className="px-4 py-2 rounded-lg hover:bg-slate-800 hover:text-blue-400 transition-colors">GAMES</Link>
-            <Link href="/about" className="px-4 py-2 rounded-lg hover:bg-slate-800 hover:text-blue-400 transition-colors">ABOUT US</Link>
-          </div>
-        </nav>
+        <NavBar />
 
         {/* main wrapper ensures the content pushes the page height down */}
         <main className="flex-1 flex flex-col">
           {children}
         </main>
+
+        {/* TODO: Place footer below here. Use a component like the navbar does above */}
         
       </body>
     </html>

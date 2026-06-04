@@ -84,8 +84,6 @@ export default function AboutPage() {
           <h2 className="text-2xl font-bold text-white mb-6 tracking-wide">CONTACT US</h2>
           
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            
-            {/* Name Input */}
             <div className="flex flex-col gap-2">
               <label htmlFor="name" className="text-slate-300 font-medium text-sm">Name:</label>
               <input 
@@ -99,8 +97,6 @@ export default function AboutPage() {
                 className="px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
               />
             </div>
-
-            {/* Email Input */}
             <div className="flex flex-col gap-2">
               <label htmlFor="email" className="text-slate-300 font-medium text-sm">Email:</label>
               <input 
@@ -114,8 +110,6 @@ export default function AboutPage() {
                 className="px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
               />
             </div>
-
-            {/* Subject Input */}
             <div className="flex flex-col gap-2">
               <label htmlFor="sbj" className="text-slate-300 font-medium text-sm">Subject:</label>
               <input 
@@ -129,8 +123,6 @@ export default function AboutPage() {
                 className="px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
               />
             </div>
-
-            {/* Message Textarea */}
             <div className="flex flex-col gap-2">
               <label htmlFor="msg" className="text-slate-300 font-medium text-sm">Message:</label>
               <textarea 
@@ -144,8 +136,6 @@ export default function AboutPage() {
                 className="px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none"
               ></textarea>
             </div>
-
-            {/* Submit Button */}
             <div className="mt-4">
               <button 
                 type="submit"
