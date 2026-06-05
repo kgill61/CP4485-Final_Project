@@ -7,7 +7,7 @@ export default function GamesPage() {
         
         <div className="w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-10 shadow-xl">
             <h1 className="text-2xl md:text-4xl font-bold text-white mb-6 border-b border-slate-800 pb-4">
-                Games page <span className="text-sm text-slate-500 font-normal block sm:inline mt-2 sm:mt-0">(Need to add forms)</span>
+                Games page <span className="text-sm text-slate-500 font-normal block sm:inline mt-2 sm:mt-0"></span>
             </h1>
             
             {/* Image Container */}

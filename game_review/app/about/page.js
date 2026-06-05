@@ -22,12 +22,9 @@ export default function AboutPage() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevents the page from refreshing
-    
-    // TODO: Replace this URL with your actual API endpoint
     console.log("Attempting to send data:", formData);
 
     try {
-      /* Example Fetch API setup:
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -36,7 +33,7 @@ export default function AboutPage() {
       
       const data = await response.json();
       console.log("API Response:", data);
-      */
+
       
       // Clear the form after successful submission
       setFormData({ name: "", email: "", sbj: "", msg: "" });
