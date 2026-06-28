@@ -21,6 +21,7 @@ function Card({ title, description, image, id }) {
       </div>
       <div>
         <Link href={`update/${id.toString()}`} className="text-xl ps-5">Update Content</Link>
+        <Link href={`delete/${id.toString()}`} className="text-xl ps-5">Delete Game</Link>
       </div>
       
     </div>

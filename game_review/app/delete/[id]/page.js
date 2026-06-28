@@ -1,27 +1,31 @@
-"use client";
+import { connectToDB } from "../../database/db";
+import { redirect } from 'next/navigation'
 
-import { useState } from "react";
+export default async function DeletePage({params}) {
+  let id = await params;
 
-export default function DeletePage() {
-  const [id, setId] = useState("");
+  async function handleDelete() {
+    "use server";
+    const { db } = await connectToDB();
+    console.log(id.id)
+    await db.collection("gameLibrary").deleteOne(
+                {id: parseInt(id.id)}
+    )
 
-  async function handleDelete(e) {
-    e.preventDefault();
+    redirect("/games");
+  };
 
-    await fetch("/api/games/delete", {
-      method: "DELETE",
-      body: JSON.stringify({ id }),
-    });
 
-    alert("Game deleted!");
-  }
+  const {db} = await connectToDB();
+  
+  let game = await db.collection('gameLibrary').findOne({id: parseInt(id.id)})
+  console.log(game);
 
   return (
     <div style={{ padding: 20 }}>
       <h1 className="text-3xl md:text-4xl font-bold text-white tracking-wide">Delete a Game</h1>
 
-      <form onSubmit={handleDelete} className="flex flex-col gap-3 mt-2">
-        <input placeholder="Game ID" onChange={(e) => setId(e.target.value)} className="bg-slate-800 text-white placeholder-slate-400 px-2 py-1 rounded border border-slate-500 w-52 shadow-inner"/>
+      <form action={handleDelete} className="flex flex-col gap-3 mt-2">
         <button className="bg-white font-bold text-black px-3 py-1 rounded shadow hover:bg-gray-100 w-32" type="submit">Delete</button>
       </form>
 

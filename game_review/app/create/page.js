@@ -1,5 +1,6 @@
 "use client";
 
+import { redirect } from 'next/navigation'
 import { useState } from "react";
 
 export default function CreatePage() {
@@ -28,6 +29,8 @@ export default function CreatePage() {
       setWarn("");
     }
     console.log(res);
+    
+    redirect("/games");
   }
 
   return (

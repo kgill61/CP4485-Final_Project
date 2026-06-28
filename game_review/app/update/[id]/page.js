@@ -22,8 +22,6 @@ export default async function UpdatePage({params}) {
 
   const {db} = await connectToDB();
   
-  console.log(id.id)
-  console.log(typeof id.id)
   let game = await db.collection('gameLibrary').findOne({id: parseInt(id.id)})
   console.log(game);
 
