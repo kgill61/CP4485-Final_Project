@@ -42,7 +42,6 @@ export default async function GamesPage() {
         <div className="flex flex-row gap-4 p-2">
           <a href="/create"><button className="bg-white font-bold text-black px-2 py-2 rounded shadow hover:bg-gray-100">Create New Game</button></a>
           <a href="/read"><button className="bg-white font-bold text-black px-2 py-2 rounded shadow hover:bg-gray-100">View Game data</button></a>
-          <a href="/update"><button className="bg-white font-bold text-black px-2 py-2 rounded shadow hover:bg-gray-100">Update a Game</button></a>
           <a href="/delete"><button className="bg-white font-bold text-black px-2 py-2 rounded shadow hover:bg-gray-100">Delete a Game</button></a>
         </div>
 

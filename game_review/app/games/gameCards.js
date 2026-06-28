@@ -1,4 +1,6 @@
-function Card({ title, description, image }) {
+import Link from "next/link";
+
+function Card({ title, description, image, id }) {
   return (
     <div className="group bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-lg hover:-translate-y-1 hover:border-blue-500 hover:shadow-blue-900/20 transition-all duration-300 flex flex-col h-full">
       
@@ -16,6 +18,9 @@ function Card({ title, description, image }) {
         <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
           {title}
         </h3>
+      </div>
+      <div>
+        <Link href={`update/${id.toString()}`} className="text-xl ps-5">Update Content</Link>
       </div>
       
     </div>
