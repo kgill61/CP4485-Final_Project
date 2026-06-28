@@ -3,6 +3,7 @@ export async function POST(request) {
     //Might be redundent, cant see it in dev tools
     console.log("Received:", body);
     
-    return Response.json({ message: "Form info acquired"});
+    let string = `From ${body.name} (${body.email})\n Subject: ${body.sbj}\nMessage: ${body.msg}`;
 
+    return Response.json({ message: string});
 }

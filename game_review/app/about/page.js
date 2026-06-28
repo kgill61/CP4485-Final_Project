@@ -33,6 +33,7 @@ export default function AboutPage() {
       
       const data = await response.json();
       console.log("API Response:", data);
+      alert(data.message);
 
       
       // Clear the form after successful submission
