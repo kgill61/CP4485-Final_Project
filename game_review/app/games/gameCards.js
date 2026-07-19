@@ -1,8 +1,10 @@
 import Link from "next/link";
+function Card({ title, description, image, id, admin }) {
+  let link = `games/gameDisplay/${id}`
 
-function Card({ title, description, image, id }) {
   return (
     <div className="group bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-lg hover:-translate-y-1 hover:border-blue-500 hover:shadow-blue-900/20 transition-all duration-300 flex flex-col h-full">
+    <Link href={link}>
       
       {/* Image Container */}
       <div className="w-full h-48 bg-slate-950 relative flex items-center justify-center border-b border-slate-800">
@@ -19,10 +21,13 @@ function Card({ title, description, image, id }) {
           {title}
         </h3>
       </div>
+    </Link>
+    { admin &&
       <div>
         <Link href={`update/${id.toString()}`} className="text-xl ps-5">Update Content</Link>
         <Link href={`delete/${id.toString()}`} className="text-xl ps-5">Delete Game</Link>
       </div>
+    }
       
     </div>
   );

@@ -38,9 +38,11 @@ export const updateOrCreateUserInfo = async(oauthUserInfo) => {
         name
     } = oauthUserInfo;
 
+    const admin = false
+
     let user = await db.collection('users').findOne({email});
     if( !user ) {
-        const result = await db.collection('users').insertOne({email, id, name});
+        const result = await db.collection('users').insertOne({email, id, name, admin});
         user = {
             _id: result.insertedId, email, id, name
         }
