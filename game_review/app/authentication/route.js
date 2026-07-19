@@ -1,44 +1,41 @@
-const express = require('express');
-const router = express.Router();
-const { google } = require('googleapis');
-const { getGoogleOauthUrl, oauthClient } = require('../googleOauthUtil');
+//If you already have the cookies thing sorted out you can change this if need be
+import {cookies} from 'next/headers'
+import {redirect} from 'next/navigation'
+import { getGoogleUserInfo, updateOrCreateUserInfo } from "@/googleOauthUtils";
+import {SignJWT} from 'jose'
+import { NextResponse } from 'next/server';
 
-router.get('/google', (req, res) => {
-    const url = getGoogleOauthUrl();
-    return res.redirect(url);
-});
+export async function GET(params) {
+    let request = await params;
+    const {searchParams } = new URL(request.url);
+    const code = searchParams.get('code');
 
-// Callback for Google Oauth
-router.get('/google/callback', async (req, res) => {
-    try {
-        const code = req.query.code;
+    console.log(code);
 
-        const { tokens } = await oauthClient.getToken(code);
-        oauthClient.setCredentials(tokens);
+    const oauthUserInfo = await getGoogleUserInfo(code);
+    console.log(oauthUserInfo);
 
-        const oauth2 = google.oauth2({ version: 'v2', auth: oauthClient });
-        const { data: userInfo } = await oauth2.userinfo.get();
+    const createdUser = await updateOrCreateUserInfo(oauthUserInfo);
+    
+    //Creates jwt
+    const secret = new TextEncoder().encode(
+            process.env.JWT_SECRET,
+    )
+    const alg = 'HS256'
 
-        req.session.user = {
-            name: userInfo.name,
-            email: userInfo.email,
-            picture: userInfo.picture,
-        };
+    const jwt = await new SignJWT({ 'userId' : createdUser._id.toString(), 'email' : createdUser.email })
+            .setProtectedHeader({ alg })
+            .setExpirationTime('1h')
+            .sign(secret)
+    //Adds jwt to cookies
+    const cookieStore = await cookies();
+    cookieStore.set('session', jwt, {  httpOnly: true })
+    //Redirects to home page
+    redirect('/')
+}
 
-        return res.redirect('http://localhost:3000');
-    } catch (error) {
-        console.error('Google OAuth callback error:', error);
-        return res.redirect('http://localhost:3000/login-error');
-    }
-});
-
-router.get('/session', (req, res) => {
-    return res.json(req.session.user || null);
-});
-
-router.get('/logout', (req, res) => {
-    req.session = null;
-    return res.redirect('http://localhost:3000');
-});
-
-module.exports = router;
+export async function POST() {
+    const cookieStore = cookies();
+    cookieStore.delete('session')
+    return NextResponse.redirect('/')
+}

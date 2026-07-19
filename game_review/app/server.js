@@ -1,32 +1,34 @@
-//Backend file to work with the Frontend
-require('dotenv').config({ path: '.env.local' });
+//We might not need this file anymore but keeping it just in case
 
-const express = require('express');
-const cors = require('cors');
-const cookieSession = require('cookie-session');
-const authRoutes = require('./authentication/route.js');
+// //Backend file to work with the Frontend
+// require('dotenv').config({ path: '.env.local' });
 
-const app = express();
+// const express = require('express');
+// const cors = require('cors');
+// const cookieSession = require('cookie-session');
+// const authRoutes = require('./authentication/route.js');
 
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true,
-}));
+// const app = express();
 
-app.use(cookieSession({
-    name: 'session',
-    keys: [process.env.SESSION_KEY],
-    maxAge: 24 * 60 * 60 * 1000,
-}));
+// app.use(cors({
+//     origin: 'http://localhost:3000',
+//     credentials: true,
+// }));
 
-app.use(express.json());
+// app.use(cookieSession({
+//     name: 'session',
+//     keys: [process.env.SESSION_KEY],
+//     maxAge: 24 * 60 * 60 * 1000,
+// }));
 
-app.use('/auth', authRoutes);
+// app.use(express.json());
 
-app.listen(4000, () => {
-    console.log('Backend running on http://localhost:4000');
-});
+// app.use('/auth', authRoutes);
 
-console.log("CLIENT ID:", process.env.GOOGLE_CLIENT_ID);
-console.log("CLIENT SECRET:", process.env.GOOGLE_CLIENT_SECRET);
-console.log("REDIRECT URI:", process.env.GOOGLE_REDIRECT_URI);
+// app.listen(4000, () => {
+//     console.log('Backend running on http://localhost:4000');
+// });
+
+// console.log("CLIENT ID:", process.env.GOOGLE_CLIENT_ID);
+// console.log("CLIENT SECRET:", process.env.GOOGLE_CLIENT_SECRET);
+// console.log("REDIRECT URI:", process.env.GOOGLE_REDIRECT_URI);
