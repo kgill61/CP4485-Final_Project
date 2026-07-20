@@ -22,7 +22,7 @@ async function NavBar() {
     }
       });
       const userData = await res.json();
-      userName = userData;
+      userName = userData.email //.email value lets it render properly
     } catch (err) {
       console.error("Fetch failed:", err);
     }

@@ -37,12 +37,12 @@ export default async function GamesPage() {
     }
       });
       const userData = await res.json();
-      userName = userData;
+      userName = userData.email?.trim().toLowerCase(); //.email fixes this, now it correctly extracts the email
   
       // Check if the user is an admin in our database. For eric's purpose, it adds everyone as not an admin, and we have to change the database ourselves to make someone and admin. If you need to check what it looks like, email one of us. But it looks exactly like part 2 did with the CRUD buttons.
       const { db } = await connectToDB();
       const user = await await db.collection("users").findOne({ email: userName });
-      admin = user.admin
+      admin = user?.admin ?? false; //This change fixes admin detection
   
     } catch (err) {
       console.error("Fetch failed:", err);

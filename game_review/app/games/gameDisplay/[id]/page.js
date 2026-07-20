@@ -1,11 +1,14 @@
 // setup this page so that it grabs the object sent to it, and displays a page based on that object. so each portion of the content is generated from said object (Images, description, reviews, etc)
 // Definitely use Databases for this later on, but you can try and get a layout down for it if you want
 
+import { cookies } from "next/headers";
 import { connectToDB } from "../../../database/db";
 import { redirect } from 'next/navigation'
 
 export default async function gamePage({params}) {
   let id = await params;
+  const cookie = await cookies();
+  const login = cookie.get('login');
 
   const {db} = await connectToDB();
   
@@ -41,6 +44,8 @@ export default async function gamePage({params}) {
 
         {/* Reviews Section Placeholder */}
         <div className="mt-8 border-t border-slate-800 pt-8 bg-slate-950/50 rounded-xl p-6 border border-slate-800/50">
+            {login && (
+            <a href={`/review?gameId=${game.id}`}><button className="bg-white font-bold text-black px-2 py-2 rounded shadow hover:bg-gray-100">Write a Review for a game</button></a>)}
             {/* PUT REVIEW LIST HERE, ALONG WITH A FORM TO SUBMIT A NEW ONE */}
         </div>
 

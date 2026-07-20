@@ -15,7 +15,7 @@ export async function GET() {
     const secretKey = new TextEncoder().encode(process.env.JWT_SECRET);
     const userData = await jwtVerify(login, secretKey, {algorithms: ['HS256']});
     const email = userData.payload.email
-    return Response.json(email)
+    return Response.json({ authenticated: true, email });
   } catch (error) {
     return Response.json({ authenticated: false }, { status: 401 })
   }
