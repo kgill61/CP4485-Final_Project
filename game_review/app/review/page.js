@@ -10,7 +10,6 @@ export default function ReviewPage() {
   const [warn, setWarn] = useState("");
   const searchParams = useSearchParams();
   const gameId = searchParams.get("gameId");
-  console.log("Game ID from URL:", gameId);
 
   //Adds game id to the review form area automatically
   useEffect(() => {
@@ -22,7 +21,7 @@ export default function ReviewPage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prevData) => ({
-      ...prevData,
+      prevData,
       [name]: value,
     }));
   };

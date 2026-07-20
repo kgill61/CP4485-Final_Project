@@ -3,17 +3,18 @@
 
 import { cookies } from "next/headers";
 import { connectToDB } from "../../../database/db";
-import { redirect } from 'next/navigation'
+import jwt from "jsonwebtoken";
 
 export default async function gamePage({params}) {
-  let id = await params;
+  const id = await params;
   const cookie = await cookies();
   const login = cookie.get('login');
 
   const {db} = await connectToDB();
   
   let game = await db.collection('gameLibrary').findOne({id: parseInt(id.id)});
-  console.log(game);
+  let reviews = await db.collection("reviews").find({ gameId: parseInt(id.id) }).toArray();
+
   let imageSRC = `../../${game.image}`
 
   return (
@@ -43,12 +44,27 @@ export default async function gamePage({params}) {
         </p>
 
         {/* Reviews Section Placeholder */}
-        <div className="mt-8 border-t border-slate-800 pt-8 bg-slate-950/50 rounded-xl p-6 border border-slate-800/50">
+        <div className="mt-8 border-t border-slate-800 pt-8 bg-slate-950/50 rounded-xl p-6 border">
             {login && (
             <a href={`/review?gameId=${game.id}`}><button className="bg-white font-bold text-black px-2 py-2 rounded shadow hover:bg-gray-100">Write a Review for a game</button></a>)}
-            {/* PUT REVIEW LIST HERE, ALONG WITH A FORM TO SUBMIT A NEW ONE */}
+            {/*Review list*/}
+        <h2 className="text-2xl font-bold text-white mt-8 mb-4">Reviews</h2>
+          {reviews.length > 0 ? (
+            reviews.map((r, i) => {
+              const decoded = jwt.decode(r.user); //Decodes JSON email and makes it readable
+              const email = decoded?.email || "Anonymous";
+              return (
+                <div key={i} className="mb-4 p-4 bg-slate-800 rounded-lg border border-slate-700">
+                  <p className="text-slate-300">{r.reviewText}</p>
+                  <p className="text-slate-400 text-sm mt-2">Rating: {r.rating}/5</p>
+                  <p className="text-slate-500 text-sm mt-1">By: {email}</p>
+                </div>
+              );
+            })
+          ) : (
+            <p className="text-slate-400">No reviews yet. Be the first to write one!</p>
+          )}
         </div>
-
       </div>
     </div>
   );

@@ -28,9 +28,7 @@ function Card({ title, description, image, id, admin }) {
         <Link href={`delete/${id.toString()}`} className="text-xl ps-5">Delete Game</Link>
       </div>
     }
-      
     </div>
   );
 }
-
 export default Card;
