@@ -14,17 +14,19 @@ async function NavBar() {
     const login = cookie.get('login');
     // Get the users name, from the cookie. Needs to be a backend request to avoid decrypting on the client side
     let userName = "You should not see this. If you do, there is a significant issue. Frankly this sentence is probably way too big for the navbar so this might make the website look quite weird."
-    try {
-      const res = await fetch("http://localhost:3000/api/username", {
-        cache: "no-store",
-        headers: {
-          Cookie: cookie.toString() 
-    }
-      });
-      const userData = await res.json();
-      userName = userData;
-    } catch (err) {
-      console.error("Fetch failed:", err);
+    if (login) {
+      try {
+        const res = await fetch("http://localhost:3000/api/username", {
+          cache: "no-store",
+          headers: {
+            Cookie: cookie.toString() 
+      }
+        });
+        const userData = await res.json();
+        userName = userData;
+      } catch (err) {
+        console.error("Fetch failed:", err);
+      }
     }
 
     return (
