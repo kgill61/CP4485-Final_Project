@@ -21,7 +21,7 @@ export default function ReviewPage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prevData) => ({
-      prevData,
+      ...prevData,
       [name]: value,
     }));
   };
@@ -57,7 +57,7 @@ export default function ReviewPage() {
         <input
           placeholder="Game ID"
           name="gameId"
-          value={form.gameId}
+          value={form.gameId ?? ""}
           onChange={handleChange}
           className="bg-transparent text-white placeholder-slate-400 w-full px-2 py-2 rounded outline-none mb-4"
         />
@@ -65,7 +65,7 @@ export default function ReviewPage() {
         <textarea
           placeholder="Write your review..."
           name="reviewText"
-          value={form.reviewText}
+          value={form.reviewText ?? ""}
           onChange={handleChange}
           className="bg-transparent text-white placeholder-slate-400 w-full px-2 py-2 rounded outline-none mb-4"
           rows="5"
@@ -77,7 +77,7 @@ export default function ReviewPage() {
           name="rating"
           min="0"
           max="5"
-          value={form.rating}
+          value={form.rating ?? ""}
           onChange={handleChange}
           className="bg-transparent text-white placeholder-slate-400 w-full px-2 py-2 rounded outline-none mb-4"
         />

@@ -15,6 +15,7 @@ export default async function gamePage({params}) {
   let game = await db.collection('gameLibrary').findOne({id: parseInt(id.id)});
   let reviews = await db.collection("reviews").find({ gameId: parseInt(id.id) }).toArray();
 
+  // TODO: Fix this to only do so if game.image exists, otherwise default to a default image
   let imageSRC = `../../${game.image}`
 
   return (
