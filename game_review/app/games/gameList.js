@@ -11,6 +11,7 @@ function CardList({ games }) {
           id={item.id}
           description={item.description}
           image={item.image}
+          admin={item.admin}
         />
       ))}
     </div>
