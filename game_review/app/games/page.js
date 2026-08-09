@@ -5,6 +5,7 @@ import { connectToDB } from "../database/db";
 async function getGames() {
   try {
     const res = await fetch("http://localhost:3000/api/games", {
+      method: 'POST',
       cache: "no-store",
     });
 
