@@ -6,8 +6,7 @@ import {SignJWT} from 'jose'
 import { NextResponse } from 'next/server';
 import { connectToDB } from "../../../../database/db";
 
-export async function GET(params) {
-    let request = await params;
+export async function GET(request) {
     const {searchParams } = new URL(request.url);
     const code = searchParams.get('code');
 

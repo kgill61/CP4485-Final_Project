@@ -1,5 +1,4 @@
 // setup this page so that it grabs the object sent to it, and displays a page based on that object. so each portion of the content is generated from said object (Images, description, reviews, etc)
-// Definitely use Databases for this later on, but you can try and get a layout down for it if you want
 
 import { cookies } from "next/headers";
 import { connectToDB } from "../../../database/db";
@@ -52,8 +51,7 @@ export default async function gamePage({params}) {
         <h2 className="text-2xl font-bold text-white mt-8 mb-4">Reviews</h2>
           {reviews.length > 0 ? (
             reviews.map((r, i) => {
-              const decoded = jwt.decode(r.user); //Decodes JSON email and makes it readable
-              const email = decoded?.email || "Anonymous";
+              const email = r.user || "Anonymous";
               return (
                 <div key={i} className="mb-4 p-4 bg-slate-800 rounded-lg border border-slate-700">
                   <p className="text-slate-300">{r.reviewText}</p>
@@ -62,6 +60,7 @@ export default async function gamePage({params}) {
                 </div>
               );
             })
+
           ) : (
             <p className="text-slate-400">No reviews yet. Be the first to write one!</p>
           )}

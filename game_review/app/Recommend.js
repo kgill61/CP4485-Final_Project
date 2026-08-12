@@ -1,44 +1,53 @@
 'use client'
 import { useState } from "react";
+
 export default function Recommend() {
-    const [recs, setRecs] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+  const [recs, setRecs] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    async function getRec() {
-        // Make a call to the AI route
-        // Display with tailwind css correctly with returned data (UseStates?)
-        console.log("Getting Recommendations...")
-        setLoading(true);
-        setError(null);
+  async function getRec() {
+    console.log("Getting Recommendations...");
+    setLoading(true);
+    setError(null);
 
-        try {
-            const res = await fetch("http://localhost:3000/api/airec", {
-                method: "POST",
-                cache: "no-store",
-            });
+    try {
+      // ✅ Ask the backend if the user is logged in
+      const userRes = await fetch("/api/username", { cache: "no-store" });
+      const userData = await userRes.json();
 
-            console.log(res)
+      if (!userRes.ok || !userData.email) {
+        setError("Error, please log in with an account");
+        setLoading(false);
+        return [];
+      }
 
-            if (!res.ok) {
-                console.error("API error:", res.status);
-                setError(`API error: ${res.status}`);
-                setLoading(false);
-                return [];
-            }
+      // Proceed with recommendations
+      const res = await fetch("/api/airec", {
+        method: "POST",
+        cache: "no-store",
+      });
 
-            const data = await res.json();
-            console.log("AI Response:", data);
-            setRecs(data.recs || []); 
-            } catch (err) {
-                console.error("Fetch failed:", err);
-                setError("Failed to fetch recommendations.");
-            } finally {
-                setLoading(false);
-            }
-        }
+      if (!res.ok) {
+        console.error("API error:", res.status);
+        setError(`API error: ${res.status}`);
+        setLoading(false);
+        return [];
+      }
 
-    return (
+      const data = await res.json();
+      console.log("AI Response:", data);
+      setRecs(data.recs || []);
+    } catch (err) {
+      console.error("Fetch failed:", err);
+      setError("Failed to fetch recommendations.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+
+  return (
     <div className="p-6">
       <button
         onClick={getRec}

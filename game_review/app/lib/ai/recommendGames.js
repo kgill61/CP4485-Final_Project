@@ -1,61 +1,79 @@
-import "server-only"
-import { gameCount } from './gameSchema';
+import "server-only";
+import { connectToDB } from "../../database/db";
+import { gameCount } from "./gameSchema";
 import {
-    generateText,
-    NoObjectGeneratedError,
-    Output,
-} from 'ai';
-
+  generateText,
+  NoObjectGeneratedError,
+  Output,
+} from "ai";
 import { groqModels } from "./groqModels";
 import { gameSchema } from "./gameSchema.js";
 
 const sysPrompt = `
-        You are recommending games for a user to try.
+You are recommending games for a user to try.
 
-        Based on the given list of games and their ratings, recommend ${gameCount} games for the user to try.
+Based on the given list of games and their ratings, recommend ${gameCount} games for the user to try.
 
-        Rules:
-        1. Must be a real, already released game.
-        2. Give the proper information on each of the games.
-    `.trim()
+Rules:
+1. Must be a real, already released game.
+2. Give the proper information on each of the games.
+`.trim();
 
-export async function recommendGames(/* games */) {
-    //console.log(games);
-    // Setup getting the users reviews and give it to the AI properly
+// Add userEmail as a parameter here
+export async function recommendGames(userEmail) {
+  console.log("Rec happens for email:", userEmail);
 
-    try {
-        console.log("Rec happens")
-        const result = await generateText( {
-            model: groqModels("openai/gpt-oss-20b"),
-            system: sysPrompt,
-            /* TODO: Change the prompt to use user information, like some of their reviewed games. */
-            prompt: `The user has played these games: ["Batman Arkham Asylum"]`,
-            output: Output.object({
-                name: "gameRecs",
-                description: "Game recommendations",
-                schema: gameSchema,
-            }),
-            maxRetries: 1,
-            providerOptions: {
-                groq: {
-                    reasoningEffort: "low",
-                },
-            maxOutputTokens: 2500
-            },
-        });
-        console.log(result);
-        return result.output;
-    }
-    catch( error ) {
-        if( NoObjectGeneratedError.isInstance(error)) {
-            console.error("Response does not meet standards.", 
-            { cause: error.cause,
-              text: error.text,
-              usage: error.usage,
-            })
-            throw new Error("The AI did not respond with the correct standards.");
-        }
-        throw error;
+  try {
+    const { db } = await connectToDB();
+    console.log("Connected to DB");
+
+    // Use the parameter directly
+    const reviews = await db.collection("reviews").find({ user: userEmail }).toArray();
+    console.log("Fetched reviews:", reviews);
+
+    if (!reviews || reviews.length === 0) {
+      console.warn("No reviews found for this user.");
+      throw new Error("No reviews found for this user.");
     }
 
+    const reviewedGames = reviews.map(r => ({
+      name: r.reviewText,
+      rating: r.rating,
+    }));
+    console.log("Reviewed games formatted:", reviewedGames);
+
+    const reviewedList = reviewedGames
+      .map(g => `${g.name} (rating: ${g.rating})`)
+      .join(", ");
+    console.log("Prompt built:", reviewedList);
+
+    const result = await generateText({
+      model: groqModels("openai/gpt-oss-20b"),
+      system: sysPrompt,
+      prompt: `The user has played and reviewed these games: [${reviewedList}]. Recommend ${gameCount} games they might enjoy based on these reviews.`,
+      output: Output.object({
+        name: "gameRecs",
+        description: "Game recommendations",
+        schema: gameSchema,
+      }),
+      maxRetries: 1,
+      providerOptions: { groq: { reasoningEffort: "low" } },
+      maxOutputTokens: 2500,
+    });
+
+    console.log("AI result:", result);
+    return result.output;
+  } catch (error) {
+    if (NoObjectGeneratedError.isInstance(error)) {
+      console.error("Response does not meet standards.", {
+        cause: error.cause,
+        text: error.text,
+        usage: error.usage,
+      });
+      throw new Error("The AI did not respond with the correct standards.");
+    }
+
+    console.error("recommendGames() failed:", error);
+    throw error;
+  }
 }
