@@ -12,7 +12,7 @@ export default function Recommend() {
     setError(null);
 
     try {
-      // ✅ Ask the backend if the user is logged in
+      // Ask the backend if the user is logged in
       const userRes = await fetch("/api/username", { cache: "no-store" });
       const userData = await userRes.json();
 
@@ -29,11 +29,16 @@ export default function Recommend() {
       });
 
       if (!res.ok) {
-        console.error("API error:", res.status);
-        setError(`API error: ${res.status}`);
+        const data = await res.json();
+        if (data.message) {
+          setError(data.message);
+        } else {
+          setError(`API error: ${res.status}`);
+        }
         setLoading(false);
         return [];
       }
+
 
       const data = await res.json();
       console.log("AI Response:", data);

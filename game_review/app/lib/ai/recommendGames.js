@@ -36,10 +36,18 @@ export async function recommendGames(userEmail) {
       throw new Error("No reviews found for this user.");
     }
 
-    const reviewedGames = reviews.map(r => ({
-      name: r.reviewText,
-      rating: r.rating,
-    }));
+    // Fetch game titles for each review
+    const reviewedGames = await Promise.all(
+      reviews.map(async r => {
+        const game = await db.collection("gameLibrary").findOne({ id: r.gameId });
+        return {
+          name: game?.title || `Game ID ${r.gameId}`,
+          rating: r.rating,
+        };
+      })
+    );
+
+
     console.log("Reviewed games formatted:", reviewedGames);
 
     const reviewedList = reviewedGames
