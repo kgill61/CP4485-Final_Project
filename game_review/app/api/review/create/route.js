@@ -9,16 +9,27 @@ export async function POST(req) {
     if (!gameId || !reviewText) {
       return Response.json({ worked: false, message: "Missing required fields" });
     }
-    //Variables
+
     const { db } = await connectToDB();
-    const cookie = await  cookies();
-    const login = cookie.get("login")?.value;
-    // Stores the review
+    const cookieStore = await cookies();
+    const cookieHeader = (await cookieStore.getAll())
+      .map(c => `${c.name}=${c.value}`)
+      .join("; ");
+
+    // Fetch the user email from your username API
+    const res = await fetch("http://localhost:3000/api/username", {
+      cache: "no-store",
+      headers: { Cookie: cookieHeader },
+    });
+    const userData = await res.json();
+    const userEmail = userData.email;
+
+    // Store the review using the email
     await db.collection("reviews").insertOne({
       gameId: parseInt(gameId),
       reviewText,
       rating: parseInt(rating),
-      user: login,
+      user: userEmail,
       createdAt: new Date(),
     });
 
