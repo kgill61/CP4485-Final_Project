@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { connectToDB } from "../../database/db";
 import { recommendGames } from "../../lib/ai/recommendGames.js";
+export const dynamic = 'force-dynamic';
 
 export async function POST(request) {
   try {

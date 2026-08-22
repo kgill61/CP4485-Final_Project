@@ -1,6 +1,7 @@
 import CardList from "./gameList";
 import { cookies } from 'next/headers'
 import { connectToDB } from "../database/db";
+export const dynamic = 'force-dynamic';
 
 async function getGames() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
