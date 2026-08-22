@@ -16,7 +16,8 @@ async function NavBar() {
     let userName = "You should not see this. If you do, there is a significant issue. Frankly this sentence is probably way too big for the navbar so this might make the website look quite weird."
     if (login) {
       try {
-        const res = await fetch("http://localhost:3000/api/username", {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+        const res = await fetch(`${baseUrl}/api/username`, {
           cache: "no-store",
           headers: {
             Cookie: cookie.toString() 

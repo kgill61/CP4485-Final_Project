@@ -10,7 +10,8 @@ export async function POST(request) {
       .join("; ");
 
     // Fetch user email from your username API
-    const res = await fetch("http://localhost:3000/api/username", {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/username`, {
       cache: "no-store",
       headers: { Cookie: cookieHeader },
     });

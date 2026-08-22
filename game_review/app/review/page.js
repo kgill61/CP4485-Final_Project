@@ -27,10 +27,11 @@ export default function ReviewPage() {
   };
 
   async function handleSubmit(e) {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     e.preventDefault();
     console.log(form);
 
-    const response = await fetch("/api/review/create", {
+    const response = await fetch(`${baseUrl}/api/review/create`, {
       method: "POST",
       body: JSON.stringify(form),
     });

@@ -25,7 +25,8 @@ export default function AboutPage() {
     console.log("Attempting to send data:", formData);
 
     try {
-      const response = await fetch('/api/contact', {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+      const response = await fetch(`${baseUrl}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

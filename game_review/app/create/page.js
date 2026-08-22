@@ -18,7 +18,8 @@ export default function CreatePage() {
   async function handleSubmit(e) {
     e.preventDefault();
     console.log(form)
-    const response = await fetch("/api/games/create", {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const response = await fetch(`${baseUrl}/api/games/create`, {
       method: "POST",
       body: JSON.stringify(form),
     });

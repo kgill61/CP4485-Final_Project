@@ -13,7 +13,8 @@ export default function Recommend() {
 
     try {
       // Ask the backend if the user is logged in
-      const userRes = await fetch("/api/username", { cache: "no-store" });
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+      const userRes = await fetch(`${baseUrl}/api/username`, { cache: "no-store" });
       const userData = await userRes.json();
 
       if (!userRes.ok || !userData.email) {
@@ -23,7 +24,7 @@ export default function Recommend() {
       }
 
       // Proceed with recommendations
-      const res = await fetch("/api/airec", {
+      const res = await fetch(`${baseUrl}/api/airec`, {
         method: "POST",
         cache: "no-store",
       });
