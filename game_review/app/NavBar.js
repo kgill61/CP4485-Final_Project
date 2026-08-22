@@ -36,6 +36,7 @@ async function NavBar() {
           <div className="flex gap-2 sm:gap-4 font-medium text-sm sm:text-base">
             <Link href="/games" className="px-4 py-2 rounded-lg hover:bg-slate-800 hover:text-blue-400 transition-colors">GAMES</Link>
             <Link href="/recommendations" className="px-4 py-2 rounded-lg hover:bg-slate-800 hover:text-blue-400 transition-colors">AI</Link>
+            <Link href="/reviewGuesser" className="px-4 py-2 rounded-lg hover:bg-slate-800 hover:text-blue-400 transition-colors">REVIEW GUESSER</Link>
             <Link href="/about" className="px-4 py-2 rounded-lg hover:bg-slate-800 hover:text-blue-400 transition-colors">ABOUT US</Link>
             {login != null ?
                <div className="px-4 py-2 rounded-lg">Signed in: {userName}</div> : <div className="px-4 py-2 rounded-lg">Not signed in</div>
