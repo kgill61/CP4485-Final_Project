@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { connectToDB } from "../../../database/db";
+export const dynamic = 'force-dynamic';
 
 export async function POST(req) {
   try {
@@ -17,7 +18,7 @@ export async function POST(req) {
       .join("; ");
 
     // Fetch the user email from your username API
-    const res = await fetch("http://localhost:3000/api/username", {
+    const res = await fetch(`${baseUrl}/api/username`, {
       cache: "no-store",
       headers: { Cookie: cookieHeader },
     });

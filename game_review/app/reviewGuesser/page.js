@@ -1,4 +1,5 @@
 'use client';
+export const dynamic = 'force-dynamic';
 
 import { useState, useEffect } from "react";
 
@@ -7,6 +8,7 @@ export default function ReviewGuesser() {
   const [guess, setGuess] = useState("");
   const [message, setMessage] = useState("");
   const [revealedLetters, setRevealedLetters] = useState(0);
+  const [winner, setWinner] = useState("")
 
   // Timer
   const [timeLeft, setTimeLeft] = useState(60);
@@ -33,7 +35,8 @@ export default function ReviewGuesser() {
 
   // Fetch's a random review
   async function getRandomReview() {
-    const res = await fetch("/api/reviewGuesser");
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/reviewGuesser`);
     const data = await res.json();
 
     setReview(data);
@@ -66,6 +69,7 @@ export default function ReviewGuesser() {
     setRevealedLetters(review.gameTitle.length);
     setMessage("Correct! You guessed the game!");
     setTimerActive(false);
+    setWinner("WINNER!")
   } else {
     if (revealedLetters < review.gameTitle.length) {
       const newRevealed = revealedLetters + 1;
@@ -123,6 +127,7 @@ export default function ReviewGuesser() {
           </button>
         </div>
       )}
+      <h1 className="font-bold text-green-600 text-9xl">{winner}</h1>
     </div>
   );
 }

@@ -1,10 +1,12 @@
 import CardList from "./gameList";
 import { cookies } from 'next/headers'
 import { connectToDB } from "../database/db";
+export const dynamic = 'force-dynamic';
 
 async function getGames() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   try {
-    const res = await fetch("http://localhost:3000/api/games", {
+    const res = await fetch(`${baseUrl}/api/games`, {
       method: 'GET',
       cache: "no-store",
     });
@@ -22,6 +24,7 @@ async function getGames() {
 
 
 export default async function GamesPage() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   let games = await getGames();
 
   const cookie = await cookies();
@@ -31,7 +34,7 @@ export default async function GamesPage() {
   let admin = false
   if (login) {
     try {
-      const res = await fetch("http://localhost:3000/api/username", {
+      const res = await fetch(`${baseUrl}/api/username`, {
         cache: "no-store",
         headers: {
           Cookie: cookie.toString() 
