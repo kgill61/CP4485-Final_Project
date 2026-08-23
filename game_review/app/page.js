@@ -72,7 +72,7 @@ export default function FullScreenCarousel() {
         </button>
         
         {/* Clickable Game Centerpiece */}
-        {/* Uses the game's _id to navigate to /games/[id] */}
+        {/* Uses the game's id to navigate to /games/gameDisplay/[id] */}
         <Link 
           href={`/games/gameDisplay/${currentGame.id}`} 
           className="flex-1 flex flex-col items-center justify-center text-center px-4 group cursor-pointer"
