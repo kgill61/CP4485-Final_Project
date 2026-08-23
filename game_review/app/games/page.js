@@ -30,16 +30,18 @@ export default async function GamesPage() {
   let games = await getGames();
 
   const cookie = await cookies();
-  const login = cookie.get('login');
+  const login = cookie.get('session');
   // Get the users name, from the cookie. Needs to be a backend request to avoid decrypting on the client side
   let userName = ""
   let admin = false
   if (login) {
     try {
+      const cookieHeader = `${login.name}=${login.value}`
       const res = await fetch(`${baseUrl}/api/username`, {
         cache: "no-store",
         headers: {
-          Cookie: cookie.toString() 
+          Cookie: cookieHeader 
+          
     }
       });
       const userData = await res.json();
