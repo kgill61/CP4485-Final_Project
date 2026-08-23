@@ -11,6 +11,7 @@ export async function POST(req) {
       return Response.json({ worked: false, message: "Missing required fields" });
     }
 
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
     const { db } = await connectToDB();
     const cookieStore = await cookies();
     const cookieHeader = (await cookieStore.getAll())
