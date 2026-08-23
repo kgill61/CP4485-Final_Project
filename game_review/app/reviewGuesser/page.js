@@ -36,7 +36,7 @@ export default function ReviewGuesser() {
   // Fetch's a random review
   async function getRandomReview() {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/reviewGuesser`);
+    const res = await fetch(`/api/reviewGuesser`);
     const data = await res.json();
 
     setReview(data);
