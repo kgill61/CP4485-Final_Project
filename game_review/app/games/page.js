@@ -11,6 +11,8 @@ async function getGames() {
       cache: "no-store",
     });
 
+    console.log(res)
+
     if (!res.ok) {
       console.error("API error:", res.status);
       return [];
