@@ -14,6 +14,7 @@ async function NavBar() {
 
     const cookie = await cookies();
     const login = cookie.get('__Secure-next-auth.session-token');
+    console.log(login)
     // Get the users name, from the cookie. Needs to be a backend request to avoid decrypting on the client side
     let userName = "You should not see this. If you do, there is a significant issue. Frankly this sentence is probably way too big for the navbar so this might make the website look quite weird."
     if (login) {
