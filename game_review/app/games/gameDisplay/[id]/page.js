@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 export default async function gamePage({params}) {
   const id = await params;
   const cookie = await cookies();
-  const login = cookie.get('login');
+  const login = cookie.get('session');
 
   const {db} = await connectToDB();
   
