@@ -25,7 +25,14 @@ export async function GET(request) {
             .sign(secret)
     
     const cookie = await cookies();
-    cookie.set('login', jwt, {  httpOnly: true })
+    cookie.set('login', jwt, {  
+        name: 'your_session_cookie',
+        value: token,
+        httpOnly: true, 
+        secure: process.env.NODE_ENV === 'production', 
+        sameSite: 'lax',
+        path: '/',
+    })
     
     try {
         const { db } = await connectToDB();
