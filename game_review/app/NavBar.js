@@ -20,14 +20,17 @@ async function NavBar() {
     if (login) {
       try {
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+        const cookieHeader = `${login.name}=${login.value}`
         const res = await fetch(`${baseUrl}/api/username`, {
           cache: "no-store",
           headers: {
-            Cookie: cookie.toString() 
-      }
+            Cookie: cookieHeader 
+          }
         });
         const userData = await res.json();
-        userName = userData.email //.email value lets it render properly
+        if (userData.authenticated && userData.email) {
+          userName = userData.email;
+        }
       } catch (err) {
         console.error("Fetch failed:", err);
       }

@@ -3,7 +3,7 @@ import { jwtVerify } from 'jose';
 
 export async function GET() {
   const cookieStore = await cookies()
-  const login = cookieStore.get("login")?.value
+  const login = cookieStore.get("session")?.value
   //console.log(login)
   //console.log(cookieStore.getAll())
 
